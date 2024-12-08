@@ -5,7 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 class SiteViewScreen extends StatefulWidget {
   final SiteModel site;
 
-  SiteViewScreen({super.key, required this.site});
+  const SiteViewScreen({super.key, required this.site});
 
   @override
   State<SiteViewScreen> createState() => _SiteViewScreenState();
@@ -25,7 +25,7 @@ class _SiteViewScreenState extends State<SiteViewScreen> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {
-            if (progress != 100) {
+            if (progress != 100 && mounted) {
               setState(() {
                 progressNote = "Loading page $progress%";
               });
@@ -61,6 +61,8 @@ class _SiteViewScreenState extends State<SiteViewScreen> {
   }
 
   Future removeAds() async {
+    if (!mounted) return;
+
     setState(() {
       progressNote = "Blocking Ads..";
     });
@@ -219,6 +221,7 @@ class _SiteViewScreenState extends State<SiteViewScreen> {
           if (_isLoading)
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [CircularProgressIndicator(), Text(progressNote)],
             ),
         ],

@@ -11,7 +11,7 @@ class AppName extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height / 4,
+            height: MediaQuery.of(context).size.height / 10,
           ),
           Text(
             "News",
