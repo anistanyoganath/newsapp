@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/components/shared/section_title.dart';
-import 'package:newsapp/components/shared/site_card.dart';
+import 'package:newsapp/components/shared/site_card_wide.dart';
 import 'package:newsapp/const/sites.dart';
 import 'package:newsapp/screens/all_sites_screen.dart';
 
@@ -10,52 +10,54 @@ class TopSites extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const SectionTitle(title: "Top Sites", color: Colors.black),
-        const SizedBox(height: 12),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              ...sites.take(3).map((site) {
-                return Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: SiteCard(site: site),
-                );
-              }),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AllSitesScreen(),
-                    ),
-                  );
-                },
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  elevation: 4,
-                  color: Colors.blueAccent,
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 12.0, horizontal: 16.0),
-                    child: Text(
-                      "View More",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+        const Row(
+          children: [
+            SectionTitle(title: "Top Sites", color: Colors.black),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
+              childAspectRatio: 3 / 3,
+            ),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(), //
+            itemCount: sites.take(4).length,
+            itemBuilder: (context, index) {
+              final site = sites[index];
+              return SiteCardWide(site: site);
+            },
           ),
         ),
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AllSitesScreen(),
+              ),
+            );
+          },
+          child: const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+            child: Text(
+              "View More",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(
+            height: 20,
+          ),
       ],
     );
   }

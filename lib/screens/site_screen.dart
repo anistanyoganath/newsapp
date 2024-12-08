@@ -22,6 +22,7 @@ class SiteScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             // Banner Image
             Stack(
@@ -90,25 +91,28 @@ class SiteScreen extends StatelessWidget {
                   const SizedBox(height: 16),
 
                   // Visit Website Button
-                  ElevatedButton.icon(
-                    onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SiteViewScreen(
-                                  site: site,
-                                ))),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: site.bgColor,
-                      foregroundColor: site.fgColor,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 16,
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: ElevatedButton.icon(
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SiteViewScreen(
+                                    site: site,
+                                  ))),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: site.bgColor,
+                        foregroundColor: site.fgColor,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 16,
+                        ),
                       ),
-                    ),
-                    icon: const Icon(Icons.open_in_browser),
-                    label: const Text(
-                      "Visit Website",
-                      style: TextStyle(fontSize: 16),
+                      icon: const Icon(Icons.open_in_browser),
+                      label: const Text(
+                        "Visit Website",
+                        style: TextStyle(fontSize: 16),
+                      ),
                     ),
                   ),
                 ],

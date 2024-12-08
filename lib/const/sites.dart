@@ -79,7 +79,7 @@ List<SiteModel> sites = [
       link: "https://dannews.lk/",
       image: "dannews.jpg",
       description: "",
-      bgColor: Color.fromRGBO(21, 21, 21, 1),
+      bgColor: const Color.fromRGBO(21, 21, 21, 1),
       fgColor: Colors.white),
   SiteModel(
       name: "Dan News",
@@ -87,7 +87,7 @@ List<SiteModel> sites = [
       link: "https://dannews.lk/",
       image: "dannews.jpg",
       description: "",
-      bgColor: Color.fromRGBO(21, 21, 21, 1),
+      bgColor: const Color.fromRGBO(21, 21, 21, 1),
       fgColor: Colors.white),
   SiteModel(
       name: "Hiru News",
@@ -96,6 +96,6 @@ List<SiteModel> sites = [
       image: "hirunews.jpg",
       description:
           "Hiru News Most visited website in Sri Lanka,Sri Lanka Latest news updates from Sri Lanka.Sri Lanka News updates and discussions. Welcome to the No1 online news Site for Sri Lankans. Best News Media Website provides Breaking News on Politics, Business, Sports, World, Hot News & Photo Gallery. A Rayynor Silva Holdings Company.පැත්ත ගියත් ඇත්ත කියන, හිරු ප්‍රවෘත්ති, හිරු නිවුස්,  ශ්‍රී ලංකා ප්‍රවෘත්ති, නවතම ප්‍රවෘත්ති, සජීව ප්‍රවෘත්ති විකාශය. ලංකාවේ අංක 01කේ ප්‍රවෘත්ති පැත්ත ගියත් ඇත්ත කියන හිරු නවතම පුවත් ලබා ගැනීම සදහා අප වෙබි අඩවියට පිවිසෙන්න.",
-      bgColor: Color.fromRGBO(166, 27, 31, 1),
+      bgColor: const Color.fromRGBO(166, 27, 31, 1),
       fgColor: Colors.white),
 ];

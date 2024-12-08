@@ -1,3 +1,3 @@
 import 'package:flutter/material.dart';
 
-const commonColor = Colors.red;
+const commonColor = Colors.orange;

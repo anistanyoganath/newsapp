@@ -13,11 +13,12 @@ class SiteCardWide extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => SiteScreen (
+                builder: (context) => SiteScreen(
                       site: site,
                     )));
       },
       child: Container(
+        clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
               boxShadow: const [
                 BoxShadow(
@@ -26,65 +27,49 @@ class SiteCardWide extends StatelessWidget {
                   offset: Offset(0, 4),
                 ),
               ],
-              gradient: LinearGradient(
-                colors: [site.bgColor, site.bgColor],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              image: DecorationImage(
+                  image: AssetImage("assets/images/${site.image}"),
+                  fit: BoxFit.cover),
               borderRadius: BorderRadius.circular(10)),
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: site.fgColor,
-                      radius: 30,
-                      backgroundImage: NetworkImage(site.image),
-                    )
-                  ],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromARGB(186, 0, 0, 0),
+                      Color.fromARGB(126, 129, 123, 123)
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.topRight,
+                  ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 1.5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            site.name,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: site.fgColor),
-                          ),
-                          Text(
-                            "Visit ${site.name} website",
-                            style: TextStyle(color: site.fgColor),
-                            overflow: TextOverflow.clip,
-                          )
-                        ],
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 12, right: 12, bottom: 5, top: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${site.name} - ${site.language.name}",
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.white),
                       ),
-                    ),
-                    IconButton(
-                        color: site.fgColor,
-                        iconSize: 20,
-                        onPressed: null,
-                        icon: Icon(
-                          Icons.arrow_right_alt,
-                          color: site.fgColor,
-                        ))
-                  ],
-                )
-              ],
-            ),
+                      Text(
+                        site.description,
+                        style: const TextStyle(
+                            fontSize: 12,
+                            color: Color.fromARGB(214, 255, 255, 255)),
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
           )),
     );
   }

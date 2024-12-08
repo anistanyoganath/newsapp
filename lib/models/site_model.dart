@@ -24,3 +24,9 @@ enum Language {
   tamil,
   sinhala,
 }
+extension LanguageExtension on Language {
+  String get name {
+    String enumName = toString().split('.').last;
+    return enumName[0].toUpperCase() + enumName.substring(1);
+  }
+}
