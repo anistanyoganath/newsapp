@@ -14,9 +14,7 @@ class SiteViewScreen extends StatefulWidget {
 
 class _SiteViewScreenState extends State<SiteViewScreen> {
   late final WebViewController _controller;
-  bool _isLoading = true;
   bool _isDarkTheme = ThemeStore.isDarkTheme();
-  String progressNote = "";
 
   @override
   void initState() {
@@ -25,13 +23,7 @@ class _SiteViewScreenState extends State<SiteViewScreen> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
-            if (progress != 100 && mounted) {
-              setState(() {
-                progressNote = "Loading page $progress%";
-              });
-            }
-          },
+          onProgress: (int progress) {},
           onPageStarted: (String url) {
             debugPrint('Page started loading: $url');
           },
@@ -63,10 +55,6 @@ class _SiteViewScreenState extends State<SiteViewScreen> {
 
   Future removeAds() async {
     if (!mounted) return;
-
-    setState(() {
-      progressNote = "Blocking Ads..";
-    });
     await _controller.runJavaScript('''
       document.querySelectorAll('script[src*="adsense"]').forEach(el => el.remove());
       document.querySelectorAll('iframe').forEach(el => {
@@ -77,10 +65,6 @@ class _SiteViewScreenState extends State<SiteViewScreen> {
       document.querySelectorAll('[id*="ads"], [class*="ads"]').forEach(el => el.remove());
     ''');
     await Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      progressNote = "";
-      _isLoading = false;
-    });
   }
 
   Future applyTheme() async {
