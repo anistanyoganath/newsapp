@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/components/shared/section_title.dart';
-import 'package:newsapp/components/shared/site_card_wide.dart';
+import 'package:newsapp/components/shared/site_card.dart';
 import 'package:newsapp/const/sites.dart';
 import 'package:newsapp/screens/all_sites_screen.dart';
 
@@ -31,7 +31,7 @@ class TopSites extends StatelessWidget {
             itemCount: sites.take(4).length,
             itemBuilder: (context, index) {
               final site = sites[index];
-              return SiteCardWide(site: site);
+              return SiteCard(site: site);
             },
           ),
         ),
@@ -56,8 +56,8 @@ class TopSites extends StatelessWidget {
           ),
         ),
         const SizedBox(
-            height: 20,
-          ),
+          height: 20,
+        ),
       ],
     );
   }

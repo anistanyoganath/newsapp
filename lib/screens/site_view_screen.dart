@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/models/site_model.dart';
+import 'package:newsapp/utils/theme_store.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class SiteViewScreen extends StatefulWidget {
@@ -14,7 +15,7 @@ class SiteViewScreen extends StatefulWidget {
 class _SiteViewScreenState extends State<SiteViewScreen> {
   late final WebViewController _controller;
   bool _isLoading = true;
-  bool _isDarkTheme = false;
+  bool _isDarkTheme = ThemeStore.isDarkTheme();
   String progressNote = "";
 
   @override
@@ -209,23 +210,7 @@ class _SiteViewScreenState extends State<SiteViewScreen> {
           ),
         ],
       ),
-      body: Stack(
-        children: [
-          // WebView content
-          Opacity(
-            opacity: _isLoading ? 0.0 : 1.0, // Hide content while loading
-            child: WebViewWidget(controller: _controller),
-          ),
-
-          // Loading Indicator
-          if (_isLoading)
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [CircularProgressIndicator(), Text(progressNote)],
-            ),
-        ],
-      ),
+      body: WebViewWidget(controller: _controller),
     );
   }
 }

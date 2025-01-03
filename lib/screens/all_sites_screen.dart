@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/components/shared/section_title.dart';
-import 'package:newsapp/components/shared/site_card_wide.dart';
+import 'package:newsapp/components/shared/site_card.dart';
 import 'package:newsapp/const/sites.dart';
 
 class AllSitesScreen extends StatelessWidget {
@@ -31,7 +31,7 @@ class AllSitesScreen extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: sites.length,
-                itemBuilder: (context, index) => SiteCardWide(
+                itemBuilder: (context, index) => SiteCard(
                   site: sites[index],
                 ),
               ),

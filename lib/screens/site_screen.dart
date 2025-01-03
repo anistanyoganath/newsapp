@@ -1,23 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/components/shared/banner_advert.dart';
 import 'package:newsapp/models/site_model.dart';
 import 'package:newsapp/screens/site_view_screen.dart';
+import 'package:newsapp/utils/favourite_sites.dart';
 
-class SiteScreen extends StatelessWidget {
+class SiteScreen extends StatefulWidget {
   final SiteModel site;
 
   const SiteScreen({super.key, required this.site});
+
+  @override
+  State<SiteScreen> createState() => _SiteScreenState();
+}
+
+class _SiteScreenState extends State<SiteScreen> {
+  bool isFavourite = false;
+  final favouriteStore = FavouriteSitesStore();
+
+  @override
+  void initState() {
+    favouriteStore.isFavourite(widget.site).then((value) {
+      setState(() {
+        isFavourite = value;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          site.name,
+          widget.site.name,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: site.bgColor,
-        foregroundColor: site.fgColor,
+        backgroundColor: widget.site.bgColor,
+        foregroundColor: widget.site.fgColor,
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(isFavourite ? Icons.favorite_border : Icons.favorite),
+            onPressed: () {
+              if (isFavourite) {
+                favouriteStore.removeFavouriteSite(widget.site);
+                setState(() {
+                  isFavourite = false;
+                });
+              } else {
+                favouriteStore.addFavouriteSite(widget.site);
+                setState(() {
+                  isFavourite = true;
+                });
+              }
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -31,7 +69,7 @@ class SiteScreen extends StatelessWidget {
                   height: 220,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/images/${site.image}"),
+                      image: AssetImage("assets/images/${widget.site.image}"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -49,7 +87,7 @@ class SiteScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
-                      site.language.name.toUpperCase(),
+                      widget.site.language.name.toUpperCase(),
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -69,56 +107,59 @@ class SiteScreen extends StatelessWidget {
                 children: [
                   // Title
                   Text(
-                    site.name,
+                    widget.site.name,
                     style: const TextStyle(
-                      fontSize: 24,
                       fontWeight: FontWeight.bold,
+                      fontSize: 24,
                     ),
                   ),
-
                   const SizedBox(height: 8),
-
-                  // Description
-                  Text(
-                    site.description,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black87,
-                      height: 1.5,
+                  // Description with background
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  // Visit Website Button
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton.icon(
-                      onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SiteViewScreen(
-                                    site: site,
-                                  ))),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: site.bgColor,
-                        foregroundColor: site.fgColor,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 12,
-                          horizontal: 16,
-                        ),
-                      ),
-                      icon: const Icon(Icons.open_in_browser),
-                      label: const Text(
-                        "Visit Website",
-                        style: TextStyle(fontSize: 16),
+                    child: Text(
+                      widget.site.description,
+                      style: const TextStyle(
+                        fontSize: 16,
                       ),
                     ),
                   ),
                 ],
               ),
             ),
+            const Center(child: BannerAdvert())
           ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 25),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SiteViewScreen(site: widget.site)));
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue, // Button color
+            padding: const EdgeInsets.symmetric(
+              vertical: 12,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          child: const Text(
+            'Visit Website',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
         ),
       ),
     );

@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:newsapp/const/common.dart';
+import 'package:newsapp/models/color_adapter.dart';
+import 'package:newsapp/models/language_adapter.dart';
 import 'package:newsapp/models/site_model.dart';
 import 'package:newsapp/screens/home_screen.dart';
+import 'package:newsapp/utils/theme_store.dart';
 
 void main() async {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter("newsapp");
-  await Hive.openBox("appdata");
   Hive.registerAdapter(SiteModelAdapter());
+  Hive.registerAdapter(LanguageAdapter());
+  Hive.registerAdapter(ColorAdapter());
+  await Hive.openBox("appdata");
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -16,13 +22,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: commonColor),
-        useMaterial3: true,
-      ),
-      home: const HomeScreen(),
-    );
+    return ValueListenableBuilder(
+        valueListenable: Hive.box("appdata").listenable(),
+        builder: (ontext, box, _) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: commonColor),
+              useMaterial3: true,
+            ),
+            darkTheme: ThemeData(
+              useMaterial3: true,
+              brightness: Brightness.dark,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: commonColor,
+                brightness: Brightness.dark,
+              ),
+            ),
+            home: const HomeScreen(),
+            themeMode: ThemeStore.getThemeMode(),
+          );
+        });
   }
 }

@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/components/home/app_name.dart';
 import 'package:newsapp/components/home/top_sites.dart';
+import 'package:newsapp/screens/favourite_sites_screen.dart';
+import 'package:newsapp/utils/share.dart';
+import 'package:in_app_review/in_app_review.dart';
+import 'package:newsapp/utils/theme_store.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool isDarkTheme = ThemeStore.isDarkTheme();
 
   @override
   Widget build(BuildContext context) {
@@ -11,8 +22,25 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(actions: [
         PopupMenuButton<String>(
           icon: const Icon(Icons.more_vert),
-          onSelected: (value) {
-            if (value == 'fav_sites') {}
+          onSelected: (value) async {
+            if (value == 'fav_sites') {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => FavouriteSitesScreen()));
+            } else if (value == "theme") {
+              setState(() {
+                isDarkTheme = !isDarkTheme;
+              });
+              ThemeStore.toggleTheme();
+            } else if (value == "share") {
+              shareApp();
+            } else if (value == "review") {
+              final InAppReview inAppReview = InAppReview.instance;
+              if (await inAppReview.isAvailable()) {
+                inAppReview.requestReview();
+              }
+            }
           },
           itemBuilder: (BuildContext context) {
             return [
@@ -26,13 +54,15 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'theme',
                 child: Row(
                   children: [
-                    Icon(Icons.dark_mode),
-                    SizedBox(width: 8),
-                    Text('Toggle theme'),
+                    Icon(isDarkTheme
+                        ? Icons.dark_mode
+                        : Icons.dark_mode_outlined),
+                    const SizedBox(width: 8),
+                    const Text('Toggle theme'),
                   ],
                 ),
               ),
