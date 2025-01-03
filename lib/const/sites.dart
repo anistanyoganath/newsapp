@@ -51,7 +51,7 @@ List<SiteModel> sites = [
       name: "Newswire",
       language: Language.english,
       link: "https://www.newswire.lk/",
-      image: "newsfirst.png",
+      image: "newswire.jpeg",
       description: "Sri Lanka's largest News aggregator",
       bgColor: const Color.fromRGBO(70, 134, 205, 1),
       fgColor: Colors.white),
@@ -68,7 +68,7 @@ List<SiteModel> sites = [
       name: "AdaDerana",
       language: Language.sinhala,
       link: "https://sinhala.adaderana.lk/",
-      image: "adaderanasinhala.jfif",
+      image: "adaderanasinhala.png",
       description:
           "In the highly competitive news broadcasting space, Derana has built the most unbiased and comprehensive news property on offer, Ada Derana – with a news team of 100 people geared to deliver the most accurate and timely information.",
       bgColor: Colors.white,

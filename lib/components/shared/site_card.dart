@@ -27,67 +27,72 @@ class _SiteCardState extends State<SiteCard> {
       },
       child: Stack(
         children: [
-          Container(
-            clipBehavior: Clip.hardEdge,
-            decoration: BoxDecoration(
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 8,
-                  offset: Offset(0, 4),
+          Positioned.fill(
+            child: Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 8,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+                image: DecorationImage(
+                  image: AssetImage("assets/images/${widget.site.image}"),
+                  fit: BoxFit.cover,
                 ),
-              ],
-              image: DecorationImage(
-                image: AssetImage("assets/images/${widget.site.image}"),
-                fit: BoxFit.cover,
+                borderRadius: BorderRadius.circular(10),
               ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color.fromARGB(186, 0, 0, 0),
-                        Color.fromARGB(126, 129, 123, 123),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.topRight,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromARGB(186, 0, 0, 0),
+                            Color.fromARGB(126, 129, 123, 123),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.topRight,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 12,
+                          right: 12,
+                          bottom: 5,
+                          top: 5,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${widget.site.name} - ${widget.site.language.name}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              widget.site.description,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color.fromARGB(214, 255, 255, 255),
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 12,
-                      right: 12,
-                      bottom: 5,
-                      top: 5,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${widget.site.name} - ${widget.site.language.name}",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          widget.site.description,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Color.fromARGB(214, 255, 255, 255),
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Positioned(

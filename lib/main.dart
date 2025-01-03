@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:newsapp/const/common.dart';
 import 'package:newsapp/models/color_adapter.dart';
@@ -9,6 +10,7 @@ import 'package:newsapp/utils/theme_store.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   await Hive.initFlutter("newsapp");
   Hive.registerAdapter(SiteModelAdapter());
   Hive.registerAdapter(LanguageAdapter());
